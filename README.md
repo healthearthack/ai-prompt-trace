@@ -1,2 +1,2 @@
 # prompt-trace-local
-PromptTrace™ Local — AI-Ready Research &amp; Prompt Engineering Tracker
+PromptTrace™ Local — AI-First Research &amp; Prompt Engineering Tracker
