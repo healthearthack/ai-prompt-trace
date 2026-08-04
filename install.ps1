@@ -50,5 +50,5 @@ function global:prompt {
 $end
 "@
 Set-Content -LiteralPath $profilePath -Value ($existing.TrimEnd() + "`r`n" + $block) -Encoding utf8
-Write-Host 'Prompt Trace is installed. Open a new PowerShell window to see PT● beside the prompt.' -ForegroundColor Green
+Write-Host "Prompt Trace is installed. Open a new PowerShell window to see $Marker beside the prompt." -ForegroundColor Green
 Write-Host "Ledger: $(Join-Path $env:LOCALAPPDATA 'PromptTrace\breadcrumbs.jsonl')"
