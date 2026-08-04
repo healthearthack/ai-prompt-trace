@@ -13,6 +13,8 @@ CLI = ROOT / "prompt_trace.py"
 @unittest.skipUnless(subprocess.run(["where", "ssh-keygen"], capture_output=True).returncode == 0, "OpenSSH required")
 class PromptTraceTest(unittest.TestCase):
     def test_signed_chain_verifies_and_omits_command_text(self):
+        # Build a miniature trail station in a disposable folder: register a
+        # traveler, leave one cairn, then make sure its seal verifies without words.
         with tempfile.TemporaryDirectory() as folder:
             env = {**os.environ, "LOCALAPPDATA": folder}
             init = subprocess.run([sys.executable, CLI, "init", "--actor", "test-user", "--marker", "TEST-HERE", "--capture", "command-hash", "--consent"], env=env, text=True, capture_output=True)

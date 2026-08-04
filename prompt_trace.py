@@ -16,6 +16,8 @@ import time
 import uuid
 
 SCHEMA = "prompt-trace.breadcrumb.v1"
+# Think of these files as a trail station: one card identifies the traveler,
+# one locked stamp proves who marked the trail, and one journal holds the route.
 HOME = pathlib.Path(os.environ.get("LOCALAPPDATA", pathlib.Path.home() / ".local")) / "PromptTrace"
 CONFIG = HOME / "config.json"
 LEDGER = HOME / "breadcrumbs.jsonl"
@@ -23,20 +25,26 @@ KEY = HOME / "identity_ed25519"
 
 
 def run(*args: str, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    """Ask a trusted local tool a question and bring its answer back to the keeper."""
     return subprocess.run(args, input=input_text, text=True, capture_output=True, check=False)
 
 
 def canonical(value: dict) -> bytes:
+    # A wax seal only verifies if every letter sits in the same place. Sorting the
+    # keys gives signer and verifier one unambiguous version of the page.
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
 
 
 def load_config() -> dict:
+    # Before walking the trail, check that its owner hung an identity plaque.
     if not CONFIG.exists():
         raise SystemExit("Prompt Trace is not initialized. Run: prompt-trace init --actor YOUR_NAME")
     return json.loads(CONFIG.read_text(encoding="utf-8-sig"))
 
 
 def git_context(path: pathlib.Path) -> dict:
+    # Git is our map legend: it turns an ordinary folder into a named project,
+    # branch, destination, and precise mile marker (the current commit).
     top = run("git", "-C", str(path), "rev-parse", "--show-toplevel")
     if top.returncode:
         return {"project": path.name, "repository": None, "branch": None, "head": None}
@@ -48,6 +56,8 @@ def git_context(path: pathlib.Path) -> dict:
 
 
 def sign(payload: bytes) -> str:
+    # The private key is the keeper's stamp. It touches a temporary copy of the
+    # page, leaves a portable seal, and never enters the public trail journal.
     with tempfile.TemporaryDirectory() as folder:
         message = pathlib.Path(folder) / "message.json"
         message.write_bytes(payload)
@@ -58,6 +68,8 @@ def sign(payload: bytes) -> str:
 
 
 def init_identity(actor: str, marker: str, capture: str, consent: bool) -> None:
+    # No trail keeper may follow someone merely because the software was copied.
+    # The gate opens only after a separate, explicit consent decision.
     if not consent:
         raise SystemExit("Consent required. Review the data notice, then initialize with --consent.")
     HOME.mkdir(parents=True, exist_ok=True)
@@ -71,6 +83,8 @@ def init_identity(actor: str, marker: str, capture: str, consent: bool) -> None:
 
 
 def checkpoint(args: argparse.Namespace) -> None:
+    # A checkpoint is a trail cairn: small enough not to expose the traveler's
+    # conversation, but specific enough to prove who passed which project and when.
     config = load_config()
     path = pathlib.Path(args.path or os.getcwd()).resolve()
     context = git_context(path)
@@ -92,10 +106,13 @@ def checkpoint(args: argparse.Namespace) -> None:
         "previousHash": None,
     }
     if LEDGER.exists():
+        # Each new journal page names the fingerprint of the page before it. Tear
+        # one out or swap the order and the verifier will spot the broken binding.
         lines = [line for line in LEDGER.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
         if lines:
             event["previousHash"] = hashlib.sha256(lines[-1].encode()).hexdigest()
     event["signature"] = sign(canonical(event))
+    # Append rather than rewrite: the journal grows forward and preserves history.
     with LEDGER.open("a", encoding="utf-8") as ledger:
         ledger.write(json.dumps(event, separators=(",", ":")) + "\n")
     if not args.quiet:
@@ -103,6 +120,8 @@ def checkpoint(args: argparse.Namespace) -> None:
 
 
 def verify() -> None:
+    # Verification walks home along every cairn, checking both the connecting
+    # trail and the actor's seal. One altered stone invalidates the route.
     config = load_config()
     if not LEDGER.exists():
         raise SystemExit("No breadcrumbs found")
@@ -126,12 +145,16 @@ def verify() -> None:
 
 
 def status() -> None:
+    # Status is the trailhead sign: it reports the operating mode without opening
+    # or revealing the private journey recorded inside the ledger.
     config = load_config()
     count = len(LEDGER.read_text(encoding="utf-8-sig").splitlines()) if LEDGER.exists() else 0
     print(json.dumps({"enabled": True, "actor": config["actor"], "marker": config.get("marker", "PT"), "capture": config.get("capture", "command-hash"), "breadcrumbs": count, "ledger": str(LEDGER), "rawCapture": False}, indent=2))
 
 
 def main() -> None:
+    # The command parser is the station clerk, routing each request to exactly one
+    # desk: register an identity, stamp a checkpoint, verify, or report status.
     parser = argparse.ArgumentParser(prog="prompt-trace", description="Signed, privacy-preserving AI-work provenance")
     commands = parser.add_subparsers(dest="command", required=True)
     initialize = commands.add_parser("init")
