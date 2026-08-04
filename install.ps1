@@ -1,9 +1,13 @@
-param([Parameter(Mandatory=$true)][string]$Actor)
+param(
+  [Parameter(Mandatory=$true)][string]$Actor,
+  [string]$Marker = 'PT',
+  [ValidateSet('path-only','command-hash')][string]$Capture = 'command-hash'
+)
 $ErrorActionPreference = 'Stop'
 $installRoot = Join-Path $env:LOCALAPPDATA 'PromptTrace\app'
 New-Item -ItemType Directory -Force -Path $installRoot | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'prompt_trace.py') -Destination (Join-Path $installRoot 'prompt_trace.py') -Force
-python (Join-Path $installRoot 'prompt_trace.py') init --actor $Actor
+python (Join-Path $installRoot 'prompt_trace.py') init --actor $Actor --marker $Marker --capture $Capture
 
 $profilePath = $PROFILE.CurrentUserAllHosts
 New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
@@ -17,16 +21,22 @@ $escapedCli = (Join-Path $installRoot 'prompt_trace.py').Replace("'", "''")
 $block = @"
 $start
 `$global:PromptTraceCli = '$escapedCli'
+`$global:PromptTraceMarker = '$($Marker.Replace("'", "''"))'
+`$global:PromptTraceCapture = '$Capture'
 function global:prompt-trace { python `$global:PromptTraceCli @args }
 `$global:PromptTraceLastHistoryId = -1
 function global:prompt {
   `$history = Get-History -Count 1 -ErrorAction SilentlyContinue
   if (`$history -and `$history.Id -ne `$global:PromptTraceLastHistoryId) {
     `$global:PromptTraceLastHistoryId = `$history.Id
-    `$commandHash = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes(`$history.CommandLine))).ToLower()
-    python `$global:PromptTraceCli checkpoint --path `$PWD.Path --workflow powershell --command-hash `$commandHash --exit-code `$global:LASTEXITCODE --quiet 2>`$null
+    if (`$global:PromptTraceCapture -eq 'command-hash') {
+      `$commandHash = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes(`$history.CommandLine))).ToLower()
+      python `$global:PromptTraceCli checkpoint --path `$PWD.Path --workflow powershell --command-hash `$commandHash --exit-code `$global:LASTEXITCODE --quiet 2>`$null
+    } else {
+      python `$global:PromptTraceCli checkpoint --path `$PWD.Path --workflow powershell --exit-code `$global:LASTEXITCODE --quiet 2>`$null
+    }
   }
-  "`e[32mPT●`e[0m PS `$(`$PWD.Path)> "
+  "`e[32m`$global:PromptTraceMarker`e[0m PS `$(`$PWD.Path)> "
 }
 $end
 "@

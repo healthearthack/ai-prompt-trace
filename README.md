@@ -11,13 +11,13 @@ It does **not** store raw commands, prompt text, command output, keystrokes, cli
 Open PowerShell in this repository:
 
 ```powershell
-.\install.ps1 -Actor "healthearthack"
+.\install.ps1 -Actor "your-name" -Marker "I-WAS-HERE" -Capture command-hash
 ```
 
 Open a new PowerShell window. The prompt becomes:
 
 ```text
-PT● PS C:\your\project>
+I-WAS-HERE PS C:\your\project>
 ```
 
 Every command completion adds a signed event to:
@@ -25,6 +25,8 @@ Every command completion adds a signed event to:
 ```text
 %LOCALAPPDATA%\PromptTrace\breadcrumbs.jsonl
 ```
+
+Every user chooses their own actor identity and visible marker. Use `-Capture path-only` to record workflow/path boundaries without even retaining a command hash. `command-hash` is the default and proves later-disclosed command text without storing it.
 
 ## Prove it works
 
