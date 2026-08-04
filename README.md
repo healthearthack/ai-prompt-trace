@@ -204,4 +204,7 @@ The integration test creates a disposable identity, signs a real checkpoint, ver
 
 ## License
 
-[MIT](LICENSE)
+© 2026 ThePolka.Cloud contributors
+
+Prompt Trace™ and its branding are trademarks of ThePolka.Cloud.
+The source code is licensed under the [MIT License](LICENSE).
