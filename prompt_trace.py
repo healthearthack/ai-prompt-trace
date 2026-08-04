@@ -57,14 +57,16 @@ def sign(payload: bytes) -> str:
         return base64.b64encode((pathlib.Path(str(message) + ".sig")).read_bytes()).decode()
 
 
-def init_identity(actor: str, marker: str, capture: str) -> None:
+def init_identity(actor: str, marker: str, capture: str, consent: bool) -> None:
+    if not consent:
+        raise SystemExit("Consent required. Review the data notice, then initialize with --consent.")
     HOME.mkdir(parents=True, exist_ok=True)
     if not KEY.exists():
         result = run("ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-C", f"prompt-trace:{actor}", "-f", str(KEY))
         if result.returncode:
             raise SystemExit(f"Key creation failed: {result.stderr.strip()}")
     public_key = pathlib.Path(str(KEY) + ".pub").read_text(encoding="utf-8").strip()
-    CONFIG.write_text(json.dumps({"actor": actor, "publicKey": public_key, "marker": marker, "capture": capture, "rawCapture": False}, indent=2), encoding="utf-8")
+    CONFIG.write_text(json.dumps({"actor": actor, "publicKey": public_key, "marker": marker, "capture": capture, "rawCapture": False, "consentVersion": "local-metadata-v1", "consentedAt": int(time.time())}, indent=2), encoding="utf-8")
     print(f"Prompt Trace initialized for {actor}\nPublic identity: {public_key}")
 
 
@@ -136,6 +138,7 @@ def main() -> None:
     initialize.add_argument("--actor", required=True)
     initialize.add_argument("--marker", default="PT")
     initialize.add_argument("--capture", choices=("path-only", "command-hash"), default="command-hash")
+    initialize.add_argument("--consent", action="store_true")
     trace = commands.add_parser("checkpoint")
     trace.add_argument("--path")
     trace.add_argument("--action", default="command-completed")
@@ -146,7 +149,7 @@ def main() -> None:
     commands.add_parser("verify")
     commands.add_parser("status")
     args = parser.parse_args()
-    if args.command == "init": init_identity(args.actor, args.marker, args.capture)
+    if args.command == "init": init_identity(args.actor, args.marker, args.capture, args.consent)
     elif args.command == "checkpoint": checkpoint(args)
     elif args.command == "verify": verify()
     elif args.command == "status": status()

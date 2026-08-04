@@ -1,13 +1,22 @@
 param(
   [Parameter(Mandatory=$true)][string]$Actor,
   [string]$Marker = 'PT',
-  [ValidateSet('path-only','command-hash')][string]$Capture = 'command-hash'
+  [ValidateSet('path-only','command-hash')][string]$Capture = 'command-hash',
+  [switch]$AcceptConsent
 )
 $ErrorActionPreference = 'Stop'
+Write-Host 'PROMPT TRACE CONSENT' -ForegroundColor Yellow
+Write-Host "Records: actor, time, working path, Git project/remote/branch/commit, workflow, exit code$(if($Capture -eq 'command-hash'){', and a one-way command hash'})."
+Write-Host 'Never records by default: raw commands, prompts, output, keystrokes, clipboard, environment values, file contents, or credentials.'
+Write-Host 'Storage is local. The PowerShell prompt will visibly show your chosen marker while enabled.'
+if (-not $AcceptConsent) {
+  $answer = Read-Host 'Type I CONSENT to enable tracing'
+  if ($answer -cne 'I CONSENT') { throw 'Consent not granted. Nothing was installed.' }
+}
 $installRoot = Join-Path $env:LOCALAPPDATA 'PromptTrace\app'
 New-Item -ItemType Directory -Force -Path $installRoot | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'prompt_trace.py') -Destination (Join-Path $installRoot 'prompt_trace.py') -Force
-python (Join-Path $installRoot 'prompt_trace.py') init --actor $Actor --marker $Marker --capture $Capture
+python (Join-Path $installRoot 'prompt_trace.py') init --actor $Actor --marker $Marker --capture $Capture --consent
 
 $profilePath = $PROFILE.CurrentUserAllHosts
 New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null

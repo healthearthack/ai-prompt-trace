@@ -15,7 +15,7 @@ class PromptTraceTest(unittest.TestCase):
     def test_signed_chain_verifies_and_omits_command_text(self):
         with tempfile.TemporaryDirectory() as folder:
             env = {**os.environ, "LOCALAPPDATA": folder}
-            init = subprocess.run([sys.executable, CLI, "init", "--actor", "test-user", "--marker", "TEST-HERE", "--capture", "command-hash"], env=env, text=True, capture_output=True)
+            init = subprocess.run([sys.executable, CLI, "init", "--actor", "test-user", "--marker", "TEST-HERE", "--capture", "command-hash", "--consent"], env=env, text=True, capture_output=True)
             self.assertEqual(init.returncode, 0, init.stderr)
             trace = subprocess.run([sys.executable, CLI, "checkpoint", "--path", str(ROOT), "--workflow", "test", "--command-hash", "abc123"], env=env, text=True, capture_output=True)
             self.assertEqual(trace.returncode, 0, trace.stderr)

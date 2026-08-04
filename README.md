@@ -14,6 +14,8 @@ Open PowerShell in this repository:
 .\install.ps1 -Actor "your-name" -Marker "I-WAS-HERE" -Capture command-hash
 ```
 
+The installer displays the complete local data scope and does nothing until the user types `I CONSENT`. For reviewed enterprise deployment scripts, `-AcceptConsent` is an explicit non-interactive equivalent; administrators remain responsible for obtaining user consent.
+
 Open a new PowerShell window. The prompt becomes:
 
 ```text
