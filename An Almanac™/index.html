@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>An Almanac™</title>
+
+  <style>
+    body {
+      font-family: Georgia, serif;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .ticker {
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      padding: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* PRINT MODE */
+    @media print {
+      body {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>An Almanac™</h1>
+<p style="text-align:center;">Issue 001</p>
+
+<div class="ticker">
+  OIL ↑ 3.80 | RAIN ↑ | DELIVERY ↑ | MOON ↓
+</div>
+
+<div class="section">
+  <h2>Weather</h2>
+  <p>Rain increased delivery demand this week.</p>
+</div>
+
+<div class="section">
+  <h2>Oil Economy</h2>
+  <p id="fuel-text"></p>
+</div>
+
+<div class="section">
+  <h2>Delivery Signal</h2>
+  <p>Best earning window: 5–9 PM.</p>
+</div>
+
+<div class="section">
+  <h2>Food Market</h2>
+  <p>Dairy prices trending upward.</p>
+</div>
+
+<div class="section">
+  <h2>Lunar Cycle</h2>
+  <p id="lunar-text"></p>
+</div>
+  
+<script src="script.js"></script>
+<div class="section">
+  <h2>Sources</h2>
+  <p>
+    Weather: National Weather Service<br>
+    Fuel: EIA<br>
+    Food: USDA<br>
+    Lunar: NASA
+  </p>
+</div>
+
+</body>
+</html>
