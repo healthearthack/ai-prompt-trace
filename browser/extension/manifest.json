@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Prompt Trace Companion",
+  "version": "4.0.1",
+  "description": "Records explicitly submitted AI prompts in the local Prompt Trace signed ledger.",
+  "permissions": ["nativeMessaging", "storage"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://copilot.microsoft.com/*"
+  ],
+  "background": {"service_worker": "service-worker.js"},
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "https://chatgpt.com/*",
+      "https://claude.ai/*",
+      "https://gemini.google.com/*",
+      "https://copilot.microsoft.com/*"
+    ],
+    "js": ["submission.js", "content.js"],
+    "run_at": "document_start"
+  }],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Prompt Trace",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  }
+}

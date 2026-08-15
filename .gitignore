@@ -1,2 +1,8 @@
 __pycache__/
 *.py[cod]
+.prompt-trace/
+prompt-ledger.jsonl
+actors.json
+config.json
+identity_ed25519*
+*.csv

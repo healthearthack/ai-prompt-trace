@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate extension manifest
+        run: python -m json.tool browser/extension/manifest.json >/dev/null
+      - name: Check extension JavaScript syntax
+        run: |
+          node --check browser/extension/submission.js
+          node --check browser/extension/content.js
+          node --check browser/extension/service-worker.js
+      - name: Test submission stamping
+        run: node --test tests/test_submission.js

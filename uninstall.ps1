@@ -3,7 +3,7 @@ $profilePath = $PROFILE.CurrentUserAllHosts
 if (Test-Path $profilePath) {
   # Remove our fenced garden plot without uprooting the rest of the user's profile.
   $content = Get-Content -LiteralPath $profilePath -Raw
-  $content = [regex]::Replace($content, '(?s)\r?\n?\# >>> prompt-trace >>>.*?\# <<< prompt-trace <<<\r?\n?', '')
+  $content = [regex]::Replace($content, '(?s)\r?\n?\# >>> prompt-trace(?:-v[234])? >>>.*?\# <<< prompt-trace(?:-v[234])? <<<\r?\n?', '')
   Set-Content -LiteralPath $profilePath -Value $content -Encoding utf8
 }
 # Taking down the trailhead sign stops future tracing, but does not burn the old

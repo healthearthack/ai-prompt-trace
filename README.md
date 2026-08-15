@@ -1,210 +1,240 @@
-# Prompt Trace
+<p align="center"><img src="graphics/prompt-trace-quill-caret-v3.png" width="180" alt="Prompt Trace hot-pink quill drawing a text caret"></p>
 
-### Cryptographically signed breadcrumbs for AI-assisted work
+# Prompt Trace v4.0.1
 
-Prompt Trace is a consent-first provenance layer that follows your terminal workflow and leaves verifiable evidence of where AI-assisted work happened—without publishing the prompts, commands, files, or outputs that produced it.
+> Local authorship provenance for submitted AI prompts and terminal commands.
 
-```text
-[PT] PS C:\work\ai-productivity-ledger> git status
-```
+[![CI](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml/badge.svg)](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-MIT-ff2da1.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-v4.0.1%20integration%20preview-ff2da1.svg)](#production-boundaries)
 
-The small `[PT]` marker is the visible promise: tracing is active. After a command completes, Prompt Trace records a minimal project checkpoint, signs it with the user’s local Ed25519 identity, and links it to the previous checkpoint. The resulting ledger can answer **who participated, where, when, and against which Git state** while keeping the underlying work private.
+Prompt Trace places a compact authorship mark such as `[PT:AC]` before the typing caret, sanitizes the completed submission, signs it with a device-local Ed25519 key, and appends it to a tamper-evident local ledger. **PT means Prompt Trace.**
 
-> **Developer preview:** the Windows terminal tracer, local signing identity, append-only ledger, consent gate, and end-to-end verification are working. Browser capture, encrypted prompt vaults, hardware-backed keys, packaged binaries, and independent security review remain future work.
+`AC` is Andrew Kieckhefer's founding claimed ID. It is not a default or example available to another user. Author IDs are permanent and never recycled.
 
-## The idea
+## What v4.0.1 delivers
 
-Git records how code changed. Prompt Trace records the provenance surrounding AI-assisted work.
+- A readable display name plus a unique **1–8-character alphanumeric author ID**.
+- Hot-pink `[PT:AUTHOR]` attribution in supported AI composers and PowerShell.
+- Local signatures, record IDs, hashes, timestamps, Git context, and chain verification.
+- Credential redaction before storage for detected passwords, tokens, API keys, PINs, and authorization values.
+- Local/shared device registries, plus a PostgreSQL model for authoritative global uniqueness.
+- Managed enterprise issuance with one-time enrollment tokens.
+- Signing credentials that expire after 100 years; IDs remain permanently reserved.
+- CSV export for audit, research, and work-provenance review.
+- Local Model Context Protocol (MCP) tools for ChatGPT desktop and Codex.
+- Submit-boundary browser stamping that waits for modern editor state before send.
 
-Think of it as a trail keeper’s field journal:
+Prompt Trace is provenance software, not a legally qualified electronic-signature service or an employee-monitoring product. Users must consent. Automatic redaction is defense-in-depth, not a guarantee.
 
-- A **checkpoint** is a small cairn marking that a participant passed through a workflow.
-- The **private key** is the keeper’s stamp and never enters the journal.
-- The **signature** is the seal proving who stamped the page.
-- The **hash chain** binds every page to the one before it.
-- The visible **`[PT]` marker** is the porch light showing that the keeper is awake.
+## Windows installation wizard
 
-This metaphor also appears in the code comments so maintainers can understand the security model without translating a wall of cryptographic vocabulary.
-
-## What a breadcrumb contains
-
-```json
-{
-  "schema": "prompt-trace.breadcrumb.v1",
-  "actor": "your-name",
-  "action": "command-completed",
-  "workflow": "powershell",
-  "path": "C:\\work\\project",
-  "project": "project",
-  "repository": "https://github.com/example/project.git",
-  "branch": "main",
-  "head": "abc123...",
-  "commandHash": "sha256-fingerprint-or-null",
-  "exitCode": 0,
-  "previousHash": "prior-page-fingerprint",
-  "publicKey": "ssh-ed25519 ...",
-  "signature": "base64-encoded-sshsig"
-}
-```
-
-### Recorded locally
-
-- User-chosen actor identity and visible marker
-- Timestamp and workflow name
-- Working path and Git project context
-- Repository remote, branch, and current commit
-- Command exit code
-- Optional one-way command hash
-- Public key, previous-event hash, and signature
-
-### Never recorded by default
-
-- Raw commands or prompts
-- Command or model output
-- Keystrokes or clipboard contents
-- Environment-variable values or credentials
-- File contents
-- Browser history
-
-The command hash can later prove that disclosed text matches a checkpoint. It does not put that text in the ledger.
-
-## Install on Windows
-
-Requirements: Python, Git, Windows PowerShell, and OpenSSH `ssh-keygen`.
+1. Download and extract the repository ZIP.
+2. Open PowerShell in the extracted folder.
+3. Run:
 
 ```powershell
-git clone https://github.com/healthearthack/prompt-trace.git
-cd prompt-trace
-.\install.ps1 -Actor "your-name" -Marker "[PT]" -Capture command-hash
+Set-ExecutionPolicy -Scope Process Bypass
+.\setup-wizard.ps1
 ```
 
-The installer displays the complete data scope and stops until the user types exactly:
+4. Enter your full display name and your own available author ID. IDs accept only letters and numbers and are limited to eight characters.
+5. Review the capture notice and type `I CONSENT`.
+6. Close PowerShell completely and open a new window.
 
-```text
-I CONSENT
-```
+![Prompt Trace wizard requesting a unique author ID](graphics/wizard-author-id.png)
 
-Open a new PowerShell window after installation. The prompt will include the chosen marker:
+![Prompt Trace consent notice and completed installation](graphics/wizard-consent-and-install.png)
 
-```text
-[PT] PS C:\your\project>
-```
+For macOS/Linux, run `chmod +x setup-wizard.sh && ./setup-wizard.sh`, then open a new Bash or Zsh terminal.
 
-Each completed command boundary now creates one signed breadcrumb in:
+## Browser companion
 
-```text
-%LOCALAPPDATA%\PromptTrace\breadcrumbs.jsonl
-```
+The extension supports ChatGPT, Claude, Gemini, and Copilot in Chrome, Edge, and Brave.
 
-### Choose the privacy scope
+1. Complete the Prompt Trace setup wizard.
+2. Open `chrome://extensions` (Chrome/Brave) or `edge://extensions` (Edge).
+3. Enable **Developer mode**, choose **Load unpacked**, and select `browser/extension`.
+4. Copy the extension ID shown on the extensions page.
+5. Run:
 
 ```powershell
-# Project paths and workflow boundaries; no command fingerprint
-.\install.ps1 -Actor "your-name" -Marker "[PT]" -Capture path-only
-
-# Adds a one-way command fingerprint without storing the command
-.\install.ps1 -Actor "your-name" -Marker "[PT]" -Capture command-hash
+.\browser\setup-native-host.ps1 -ExtensionId YOUR_EXTENSION_ID
 ```
 
-`-AcceptConsent` is available for reviewed organizational deployment scripts. Administrators remain responsible for obtaining the user’s informed consent.
+6. Close **every window** of that browser, reopen it, and hard-refresh the AI chat page.
 
-## Prove it works
+The composer should show a hot-pink mark such as `[PT:AC]` immediately before the caret. At submission, v4.0.1 waits for the editor state to accept the tag, transmits it with the prompt, and records the same title in the local signed ledger.
+
+### Collaborative conversations
+
+Each contributor installs Prompt Trace on their own device and enrolls a distinct permanent ID. A synchronized conversation can therefore contain messages such as:
+
+```text
+[PT:AC] Review the current release candidate.
+[PT:SARAPENN] I verified the accessibility flow.
+[PT:JOESPACK] I approved the deployment configuration.
+```
+
+Every collaborator viewing that same conversation sees the tags because they are part of the transmitted message text. Platform sharing behavior still applies: a copied or forked chat is not necessarily a live multi-user room.
+
+A visible tag is authorship attribution, not cryptographic proof by itself; anyone can manually type text. Verification requires the corresponding signed ledger record, code-signature ID, and registered public key. Enterprise manager exports provide that matching audit evidence.
+
+### Personal and organization context
+
+Your author ID remains permanent while the optional organization context changes:
+
+```powershell
+prompt-trace set-context --organization ADP
+```
+
+New entries render as `[PT:AC · ADP]`. Return to personal context with:
+
+```powershell
+prompt-trace set-context
+```
+
+The organization is attribution metadata, not a second identity.
+
+## Terminal Prompt Trace Curriculum Vitae
+
+The standardized curriculum vitae exporter accepts user-selected raw inputs and creates one ZIP containing Markdown, Hypertext Markup Language, Portable Document Format, and Microsoft Word Open XML Document files. Every format uses the exact title **Terminal Prompt Trace Curriculum Vitae** and a restrained `ThePolka.Cloud · Prompt Trace` watermark.
+
+```powershell
+python -m cyber_cv .\cyber_cv\example.json --out .\terminal-prompt-trace-cv.zip
+```
+
+Cyber CV entries are opt-in. Excluding an entry removes it from the portfolio without altering the signed source ledger.
+
+The extension cannot inject into the ChatGPT desktop app, Firefox, or a different browser profile. Fully restart the exact Chromium browser where it was loaded; merely reloading ChatGPT is sometimes insufficient after native-host changes.
+
+## ChatGPT desktop and Codex
+
+MCP means Model Context Protocol. Prompt Trace v4.0.1 supplies a local
+standard-input/output (STDIO) MCP server. After completing the wizard, run:
+
+```powershell
+.\register-mcp.ps1
+```
+
+In the ChatGPT desktop app, open **Settings > MCP servers > Add server**, use
+the command and argument printed by the registration script, save, and restart
+ChatGPT. Type `/mcp` in the composer to confirm that Prompt Trace is connected.
+
+For Codex command-line interface registration:
+
+```powershell
+.\register-mcp.ps1 -CodexCli
+```
+
+The MCP server exposes `prompt_trace_status`,
+`prompt_trace_record_submission`, and `prompt_trace_recent`.
+
+The browser extension can insert `[PT:AUTHOR]` into supported transmitted web
+messages. MCP clients can record submitted activity and return its stamp and
+record identifier, but the protocol does not rewrite a user's already-submitted
+desktop composer text.
+
+## Controls
 
 ```powershell
 prompt-trace status
-Set-Location C:\path\to\your-project
-git status
+prompt-trace recent --limit 20
 prompt-trace verify
+prompt-trace-pause
+prompt-trace-resume
+prompt-trace-export "$HOME\prompt-trace.csv"
 ```
 
-Expected verification:
+Use `prompt-trace-pause` before sensitive work.
 
-```text
-Verified 2 signed breadcrumbs for your-name
-```
+## Local storage
 
-Editing, deleting, or reordering a ledger entry breaks either its Ed25519 signature or the chain connecting it to neighboring entries.
+| Data | Windows | macOS/Linux |
+|---|---|---|
+| Signed ledger | `%LOCALAPPDATA%\PromptTrace\prompt-ledger.jsonl` | `~/.prompt-trace/prompt-ledger.jsonl` |
+| Device config | `%LOCALAPPDATA%\PromptTrace\config.json` | `~/.prompt-trace/config.json` |
+| Local ID registry | `%LOCALAPPDATA%\PromptTrace\actors.json` | `~/.prompt-trace/actors.json` |
+| Private signing key | `%LOCALAPPDATA%\PromptTrace\identity_ed25519` | `~/.prompt-trace/identity_ed25519` |
+| CSV export | Path passed to `prompt-trace-export` | Path passed to `pt_export` |
 
-## Mark an AI workflow explicitly
+Never publish the private key or raw ledger. They may contain submitted work even after redaction.
 
-Agents and integrations can leave a named checkpoint without exposing task content:
+### Manager access
+
+Managers do not automatically gain access to an employee's local ledger. After the organization establishes consent, access, and retention policy, the employee or authorized device administrator can publish a sanitized CSV to a restricted shared folder:
 
 ```powershell
-prompt-trace checkpoint `
-  --workflow codex `
-  --action ai-task-completed `
-  --path $PWD
+.\enterprise\publish-audit.ps1 -DestinationFolder "\\server\PromptTrace\audits"
 ```
 
-This is the integration point for Codex, local agents, CI jobs, browser companions, and future provider adapters.
-
-## Architecture
-
-```text
-PowerShell prompt bell
-        │
-        ▼
-Minimal workflow metadata ──► Canonical JSON
-                                      │
-                         local Ed25519 signature
-                                      │
-                                      ▼
-                         Append-only JSONL ledger
-                                      │
-                                      ▼
-                         Chain + signature verifier
-```
-
-The private key remains under `%LOCALAPPDATA%\PromptTrace`. Only the public key and detached signature enter a breadcrumb.
-
-## Consent and control
-
-- Installation does not imply consent.
-- Tracing is visible in every instrumented prompt.
-- The user chooses their actor identity, marker, and capture scope.
-- Raw capture is unavailable in this release.
-- Uninstallation removes the prompt helper without silently destroying provenance history.
+Managers find the per-employee exports in that folder and can merge them with:
 
 ```powershell
-.\uninstall.ps1
+python .\enterprise\merge-audits.py "\\server\PromptTrace\audits" "\\server\PromptTrace\reports\all-employees.csv"
 ```
 
-The identity and signed ledger remain local after uninstall so evidence is not accidentally erased. Deleting them should be a separate deliberate action.
+For opt-in near-real-time reporting, run `enterprise\start-live-sync.ps1` on enrolled devices and `enterprise\live-dashboard.py` on the manager's computer. The local dashboard refreshes every three seconds and shows all reporting author IDs, record counts, last-seen times, and latest signed entries.
 
-## Current security boundary
+See [enterprise/README.md](enterprise/README.md). This is explicit audit publication, not covert manager access.
 
-Prompt Trace proves that the holder of a local private key signed a particular breadcrumb and that the ledger order has not changed. It does not yet prove:
+## Identity, companies, and global uniqueness
 
-- That a human personally executed every underlying action
-- That the workstation or private key was uncompromised
-- That a path or repository name describes the work truthfully
-- That undisclosed prompt text was safe or accurate
-- That the ledger was continuously active between recorded checkpoints
+A display name can contain spaces, such as `Joe Spack`. The visible author ID is 1–8 letters or numbers, such as `JOESPACK` or `EMP0042`, and normalizes to uppercase.
 
-Production hardening should add Windows Hello or TPM-backed identities, key rotation and revocation, encrypted optional prompt storage, timestamp authority integration, signed release artifacts, and independent security assessment.
+A local/shared JSON registry prevents duplicates only inside that registry. Guaranteeing that Northwestern Mutual and New York Life never issue the same ID requires one authoritative directory. [`registry/schema.sql`](registry/schema.sql) supplies the PostgreSQL model: `author_id` is a permanent primary key, company employment is a separate membership, and retired IDs are tombstoned rather than reused. The bootstrap registry records `AC` as founding reservation 1.
 
-## Test
+The database must be deployed with authenticated claims and serializable transactions before the product can truthfully promise worldwide uniqueness. See [registry/README.md](registry/README.md).
+
+### Version 4 portable account layer
+
+The v4 alpha PostgreSQL layer preserves one permanent account and author ID across personal computers, employer memberships, and future worker devices. Each computer has a separate revocable signing key, but all devices resolve to the same identity and `account_continuity` timeline. See [the metadata policy](registry/METADATA.md) and [v4 alpha release notes](RELEASE_NOTES_v4.0.0-alpha.1.md).
+
+For managed company enrollment:
+
+```powershell
+.\enterprise\issue-author.ps1 `
+  -AuthorId EMP0042 `
+  -DisplayName "Employee Forty Two" `
+  -Registry "\\server\PromptTrace\actors.json"
+```
+
+The employee uses the returned one-time enrollment token in the wizard. See [enterprise/README.md](enterprise/README.md).
+
+## Capture boundary
+
+Prompt Trace records completed PowerShell commands, explicitly submitted browser prompts, and activity explicitly passed through its MCP tool. It does not read command output, unsubmitted keystrokes, clipboard contents, password fields, or arbitrary files. Other terminals and AI products require explicit integrations. Installation does not mean invisible capture of all computer activity.
+
+## Verify the product
 
 ```powershell
 python -m unittest discover -s tests -v
+python -m json.tool browser\extension\manifest.json
+node --test tests\test_submission.js
 ```
 
-The integration test creates a disposable identity, signs a real checkpoint, verifies the complete chain, and confirms that command text never enters the ledger.
+GitHub Actions runs tests, validates the manifest, and checks extension JavaScript syntax on pushes and pull requests.
 
-## Roadmap
+## Project map
 
-- Signed Windows installer and packaged CLI
-- Browser companion with a persistent consent indicator
-- Codex and agent lifecycle adapters
-- Encrypted, separately consented prompt vault
-- Git commit and pull-request attestations
-- Public verification bundles
-- Hardware-backed identity support
-- Cross-platform shell hooks
+- `prompt_trace.py` — identity, signing, redaction, verification, and CSV export.
+- `setup-wizard.ps1` / `setup-wizard.sh` — consented device enrollment.
+- `browser/extension` — Chromium composer UI and submission bridge.
+- `browser/native_host.py` — local native-messaging signing bridge.
+- `mcp_server.py` — local ChatGPT desktop and Codex integration.
+- `enterprise` — managed company issuance.
+- `registry` — authoritative global identity data model and bootstrap reservation.
+- `graphics` — v3 logo and wizard screenshots.
+- `tests` — identity, uniqueness, redaction, signature, and enrollment tests.
+
+## Contributing
+
+Help is welcome. The leading community project is an accessible native GUI setup wizard that replaces terminal setup while preserving explicit consent and local-first security. Read [CONTRIBUTING.md](CONTRIBUTING.md) and find issues labeled [`help wanted`](https://github.com/healthearthack/prompt-trace/labels/help%20wanted).
+
+## Production boundaries
+
+v3 is an enterprise-ready preview. Core local signing, duplicate prevention, redaction, verification, managed enrollment, and the global-directory schema are implemented. A production launch still needs deployment of the authoritative directory, identity verification and account recovery, organization access controls, retention policy, security review, signed installers, and user/employee policy approval.
 
 ## License
 
-© 2026 ThePolka.Cloud contributors
-
-Prompt Trace™ and its branding are trademarks of ThePolka.Cloud.
-The source code is licensed under the [MIT License](LICENSE).
+[MIT](LICENSE)
