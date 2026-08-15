@@ -1,4 +1,4 @@
-# Prompt Trace v4.0.1
+# Prompt Trace v1.0.0
 
 Version 4.0.1 focuses only on reliable submitted-activity integration.
 

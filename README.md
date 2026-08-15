@@ -1,18 +1,18 @@
 <p align="center"><img src="graphics/prompt-trace-quill-caret-v3.png" width="180" alt="Prompt Trace hot-pink quill drawing a text caret"></p>
 
-# Prompt Trace v4.0.1
+# Prompt Trace v1.0.0
 
 > Local authorship provenance for submitted AI prompts and terminal commands.
 
 [![CI](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml/badge.svg)](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-ff2da1.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-v4.0.1%20integration%20preview-ff2da1.svg)](#production-boundaries)
+[![Status](https://img.shields.io/badge/status-v1.0.0%20integration%20preview-ff2da1.svg)](#production-boundaries)
 
 Prompt Trace places a compact authorship mark such as `[PT:AC]` before the typing caret, sanitizes the completed submission, signs it with a device-local Ed25519 key, and appends it to a tamper-evident local ledger. **PT means Prompt Trace.**
 
 `AC` is Andrew Kieckhefer's founding claimed ID. It is not a default or example available to another user. Author IDs are permanent and never recycled.
 
-## What v4.0.1 delivers
+## What v1.0.0 delivers
 
 - A readable display name plus a unique **1–8-character alphanumeric author ID**.
 - Hot-pink `[PT:AUTHOR]` attribution in supported AI composers and PowerShell.
@@ -64,7 +64,7 @@ The extension supports ChatGPT, Claude, Gemini, and Copilot in Chrome, Edge, and
 
 6. Close **every window** of that browser, reopen it, and hard-refresh the AI chat page.
 
-The composer should show a hot-pink mark such as `[PT:AC]` immediately before the caret. At submission, v4.0.1 waits for the editor state to accept the tag, transmits it with the prompt, and records the same title in the local signed ledger.
+The composer should show a hot-pink mark such as `[PT:AC]` immediately before the caret. At submission, v1.0.0 waits for the editor state to accept the tag, transmits it with the prompt, and records the same title in the local signed ledger.
 
 ### Collaborative conversations
 
@@ -110,7 +110,7 @@ The extension cannot inject into the ChatGPT desktop app, Firefox, or a differen
 
 ## ChatGPT desktop and Codex
 
-MCP means Model Context Protocol. Prompt Trace v4.0.1 supplies a local
+MCP means Model Context Protocol. Prompt Trace v1.0.0 supplies a local
 standard-input/output (STDIO) MCP server. After completing the wizard, run:
 
 ```powershell
@@ -201,6 +201,35 @@ For managed company enrollment:
 
 The employee uses the returned one-time enrollment token in the wizard. See [enterprise/README.md](enterprise/README.md).
 
+## Upgrade from a development build
+
+Prompt Trace v1.0.0 is the first stable public release. Earlier packages, including the v4.0.0 alpha database experiment, are treated as pre-release development builds rather than prior stable product releases.
+
+1. Pause Prompt Trace and close all supported browsers.
+2. Back up `%LOCALAPPDATA%\PromptTrace` on Windows or `~/.prompt-trace` on macOS/Linux.
+3. Download or clone Prompt Trace v1.0.0 into a new directory. Do not overwrite the previous source directory.
+4. Run the v1.0.0 setup wizard and preserve the same author ID when continuing an existing identity.
+5. Reload `browser/extension` from the v1.0.0 directory.
+6. Run `browser/setup-native-host.ps1` again using the installed extension ID.
+7. Restart the exact browser profile where the extension was loaded.
+8. Run `prompt-trace status`, `prompt-trace recent --limit 5`, and `prompt-trace verify`.
+9. Keep the backup until the existing signed ledger verifies successfully under v1.0.0.
+
+Do not copy another user's private key, configuration, registry, or raw ledger. Do not delete the earlier data directory until verification succeeds.
+## Known limitations
+
+Prompt Trace v1.0.0 is the first public integration release.
+
+- Browser stamping currently supports ChatGPT, Claude, Gemini, and Copilot in supported Chromium-based browsers.
+- Firefox and the ChatGPT desktop composer do not currently support automatic visible-text insertion.
+- Model Context Protocol integrations can record submitted activity and return an authorship stamp, but cannot rewrite text that a desktop client has already submitted.
+- Terminal capture is integration-specific and is not a universal operating-system hook.
+- Prompt Trace does not capture password fields, unsubmitted keystrokes, clipboard contents, command output, arbitrary files, or unrelated application activity.
+- Automatic credential redaction is defense-in-depth and cannot guarantee detection of every sensitive value.
+- Local and shared registries prevent duplicate author IDs only within their configured registry.
+- Worldwide author-ID uniqueness requires deployment of the authoritative registry service.
+- The production identity service, account recovery, organization administration, signed installer, key revocation, and independent security assessment remain future work.
+- A visible `[PT:AUTHOR]` label is attribution, not cryptographic proof by itself. Verification requires the corresponding signed ledger record and public key.
 ## Capture boundary
 
 Prompt Trace records completed PowerShell commands, explicitly submitted browser prompts, and activity explicitly passed through its MCP tool. It does not read command output, unsubmitted keystrokes, clipboard contents, password fields, or arbitrary files. Other terminals and AI products require explicit integrations. Installation does not mean invisible capture of all computer activity.
@@ -233,7 +262,7 @@ Help is welcome. The leading community project is an accessible native GUI setup
 
 ## Production boundaries
 
-v3 is an enterprise-ready preview. Core local signing, duplicate prevention, redaction, verification, managed enrollment, and the global-directory schema are implemented. A production launch still needs deployment of the authoritative directory, identity verification and account recovery, organization access controls, retention policy, security review, signed installers, and user/employee policy approval.
+v1.0.0 is an integration preview. Core local signing, duplicate prevention, redaction, verification, managed enrollment, and the global-directory schema are implemented. A production launch still needs deployment of the authoritative directory, identity verification and account recovery, organization access controls, retention policy, security review, signed installers, and user/employee policy approval.
 
 ## License
 
