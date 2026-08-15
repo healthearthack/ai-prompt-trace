@@ -216,6 +216,18 @@ Prompt Trace v1.0.0 is the first stable public release. Earlier packages, includ
 9. Keep the backup until the existing signed ledger verifies successfully under v1.0.0.
 
 Do not copy another user's private key, configuration, registry, or raw ledger. Do not delete the earlier data directory until verification succeeds.
+## Upgrade from a prerelease build
+
+1. Pause Prompt Trace and close every supported browser.
+2. Back up `%LOCALAPPDATA%\PromptTrace`. Never publish this folder because it can contain private signing material and recorded activity.
+3. Download and extract Prompt Trace v1.0.0 into a new folder. Do not overwrite the previous installation in place.
+4. Run `.\setup-wizard.ps1`, confirm the existing author identity when available, and review the consent boundary.
+5. Reload `browser/extension` from the v1.0.0 folder and rerun `browser\setup-native-host.ps1` with the extension ID.
+6. Restart the browser completely.
+7. Run `prompt-trace status`, `prompt-trace recent --limit 5`, and `prompt-trace verify`.
+8. Keep the backup until identity, ledger, browser, and export behavior have been verified.
+
+Prerelease version numbers were development identifiers. Prompt Trace v1.0.0 is the first official stable public release.
 ## Known limitations
 
 Prompt Trace v1.0.0 is the first public integration release.
