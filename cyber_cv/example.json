@@ -1,0 +1,21 @@
+{
+  "profile": {
+    "displayName": "Andrew Kieckhefer",
+    "authorId": "AC",
+    "headline": "Prompt Engineering and Software Development",
+    "summary": "A selected record of raw prompts and terminal inputs demonstrating learning, implementation, and professional growth."
+  },
+  "entries": [
+    {
+      "order": 1,
+      "timestamp": "2026-08-15T13:00:00Z",
+      "workspace": "Personal",
+      "organization": "",
+      "source": "browser:chatgpt.com",
+      "rawInput": "Build a portable identity model that preserves one author ID across devices.",
+      "annotation": "Defined the central product requirement for Prompt Trace v4.",
+      "recordId": "example-record-id",
+      "verified": true
+    }
+  ]
+}

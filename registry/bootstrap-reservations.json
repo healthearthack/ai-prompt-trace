@@ -1,0 +1,13 @@
+{
+  "schema": "prompt-trace.global-reservations.v1",
+  "policy": "Author IDs are permanent and never recycled",
+  "reservations": [
+    {
+      "authorId": "AC",
+      "displayName": "Andrew Kieckhefer",
+      "status": "reserved",
+      "claimedOrder": 1,
+      "note": "Founding Prompt Trace identity; ownership verification required before global activation"
+    }
+  ]
+}
