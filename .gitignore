@@ -6,3 +6,5 @@ actors.json
 config.json
 identity_ed25519*
 *.csv
+browser/cloud.thepolka.prompt_trace.json
+browser/prompt-trace-native-host.bat
