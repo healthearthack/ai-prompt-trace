@@ -171,11 +171,24 @@
 
   document.addEventListener("pointerdown", event => {
     const button = event.target instanceof Element ? event.target.closest("button") : null;
-    if (!button?.matches("[aria-label*='send' i], [title*='send' i], [data-testid*='send' i]")) return;
+    if (!button?.matches("[aria-label*='send' i], [aria-label*='submit' i], [title*='send' i], [title*='submit' i], [data-testid*='send' i], [data-testid*='submit' i], button[type='submit']")) return;
     const scope = button.closest("form") || document.body;
     const text = textFromComposer(scope);
     if (text) submitPrompt(text);
   }, true);
+
+document.addEventListener("click", event => {
+  const button = event.target instanceof Element
+    ? event.target.closest("button[data-testid='submit-button']")
+    : null;
+
+  if (!button) return;
+
+  const scope = button.closest("form") || document.body;
+  const text = textFromComposer(scope);
+
+  if (text) submitPrompt(text);
+}, true);
 
   document.addEventListener("keydown", event => {
     if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
