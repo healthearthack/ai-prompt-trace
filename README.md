@@ -2,6 +2,8 @@
 
 # PromptHub v1.0.0
 
+> Contributions welcome for next release.
+
 > Local authorship provenance for submitted AI prompts and terminal commands.
 
 [![CI](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml/badge.svg)](https://github.com/healthearthack/prompt-trace/actions/workflows/ci.yml)
