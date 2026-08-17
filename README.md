@@ -1,6 +1,6 @@
 <p align="center"><img src="graphics/prompt-trace-quill-caret-v3.png" width="180" alt="Prompt Trace hot-pink quill drawing a text caret"></p>
 
-# Prompt Trace v1.0.0
+# PromptHub v1.0.0
 
 > Local authorship provenance for submitted AI prompts and terminal commands.
 
