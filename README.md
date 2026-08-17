@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-MIT-ff2da1.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-v1.0.0%20integration%20preview-ff2da1.svg)](#production-boundaries)
 
-Prompt Trace places a compact authorship mark such as `[PT:AC]` before the typing caret, sanitizes the completed submission, signs it with a device-local Ed25519 key, and appends it to a tamper-evident local ledger. **PT means Prompt Trace.**
+PromptHub places a compact authorship mark such as `[PT:AC]` before the typing caret, sanitizes the completed submission, signs it with a device-local Ed25519 key, and appends it to a tamper-evident local ledger. **PT means Prompt Trace.**
 
 `AC` is Andrew Kieckhefer's founding claimed ID. It is not a default or example available to another user. Author IDs are permanent and never recycled.
 
