@@ -1,0 +1,655 @@
+{
+  "benchmark": "PromptHub Provenance Benchmark",
+  "benchmark_version": "1.0",
+  "status": "EXECUTED",
+  "executed_at_utc": "2026-08-25T14:50:04.977546+00:00",
+  "prompthub_commit_sha": "78d5b0a91dda77fbd84b69e523418e97e1c9fad3",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.14.7"
+  },
+  "total_scenarios": 100,
+  "overall_passed": 97,
+  "overall_failed": 3,
+  "overall_score_percent": 97.0,
+  "categories": {
+    "recording_integrity": {
+      "planned": 25,
+      "executed": 25,
+      "passed": 25,
+      "score_percent": 100.0
+    },
+    "duplicate_tag_prevention": {
+      "planned": 15,
+      "executed": 15,
+      "passed": 15,
+      "score_percent": 100.0
+    },
+    "credential_redaction": {
+      "planned": 15,
+      "executed": 15,
+      "passed": 12,
+      "score_percent": 80.0
+    },
+    "signature_verification": {
+      "planned": 20,
+      "executed": 20,
+      "passed": 20,
+      "score_percent": 100.0
+    },
+    "csv_export_integrity": {
+      "planned": 15,
+      "executed": 15,
+      "passed": 15,
+      "score_percent": 100.0
+    },
+    "tamper_detection": {
+      "planned": 10,
+      "executed": 10,
+      "passed": 10,
+      "score_percent": 100.0
+    }
+  },
+  "scenarios": [
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-01",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-02",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-03",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-04",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-05",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-06",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-07",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-08",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-09",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-10",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-11",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-12",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-13",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-14",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-15",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-16",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-17",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-18",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-19",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-20",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-21",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-22",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-23",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-24",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "recording_integrity",
+      "case_id": "REC-25",
+      "passed": true,
+      "detail": "signed record preserved"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-01",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-02",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-03",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-04",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-05",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-06",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-07",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-08",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-09",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-10",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-11",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-12",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-13",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-14",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "duplicate_tag_prevention",
+      "case_id": "DUP-15",
+      "passed": true,
+      "detail": "duplicate prevented"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-01",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-02",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-03",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-04",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-05",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-06",
+      "passed": false,
+      "detail": "redaction mismatch"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-07",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-08",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-09",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-10",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-11",
+      "passed": false,
+      "detail": "redaction mismatch"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-12",
+      "passed": false,
+      "detail": "redaction mismatch"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-13",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-14",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "credential_redaction",
+      "case_id": "RED-15",
+      "passed": true,
+      "detail": "secret redacted before storage"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-01",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-02",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-03",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-04",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-05",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-06",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-07",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-08",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-09",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-10",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-11",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-12",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-13",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-14",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-15",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-16",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-17",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-18",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-19",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "signature_verification",
+      "case_id": "VER-20",
+      "passed": true,
+      "detail": "ledger verified"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-01",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-02",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-03",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-04",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-05",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-06",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-07",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-08",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-09",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-10",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-11",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-12",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-13",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-14",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "csv_export_integrity",
+      "case_id": "CSV-15",
+      "passed": true,
+      "detail": "CSV preserved actor/text/title"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-01",
+      "passed": true,
+      "detail": "entryText tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-02",
+      "passed": true,
+      "detail": "entryTitle tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-03",
+      "passed": true,
+      "detail": "actor tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-04",
+      "passed": true,
+      "detail": "source tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-05",
+      "passed": true,
+      "detail": "recordId tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-06",
+      "passed": true,
+      "detail": "timestamp tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-07",
+      "passed": true,
+      "detail": "organization tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-08",
+      "passed": true,
+      "detail": "codeSignatureId tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-09",
+      "passed": true,
+      "detail": "signature tamper detected"
+    },
+    {
+      "category": "tamper_detection",
+      "case_id": "TAMP-10",
+      "passed": true,
+      "detail": "redactionCount tamper detected"
+    }
+  ]
+}
