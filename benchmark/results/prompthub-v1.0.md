@@ -2,8 +2,8 @@
 
 **Measured result: 97/100 scenarios passed (97.0%).**
 
-- Executed (UTC): `2026-08-25T14:27:47.913281+00:00`
-- PromptHub commit SHA: `94b40abfe59e7e31442aaaf2b15205b011814489`
+- Executed (UTC): `2026-08-25T14:50:04.977546+00:00`
+- PromptHub commit SHA: `78d5b0a91dda77fbd84b69e523418e97e1c9fad3`
 - Operating system: `Windows-11-10.0.26200-SP0`
 - Python: `3.14.7`
 

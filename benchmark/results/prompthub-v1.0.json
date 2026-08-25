@@ -2,8 +2,8 @@
   "benchmark": "PromptHub Provenance Benchmark",
   "benchmark_version": "1.0",
   "status": "EXECUTED",
-  "executed_at_utc": "2026-08-25T14:27:47.913281+00:00",
-  "prompthub_commit_sha": "94b40abfe59e7e31442aaaf2b15205b011814489",
+  "executed_at_utc": "2026-08-25T14:50:04.977546+00:00",
+  "prompthub_commit_sha": "78d5b0a91dda77fbd84b69e523418e97e1c9fad3",
   "environment": {
     "os": "Windows-11-10.0.26200-SP0",
     "python_version": "3.14.7"
