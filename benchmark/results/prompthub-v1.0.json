@@ -1,0 +1,40 @@
+{
+  "benchmark": "PromptHub Provenance Benchmark",
+  "version": "1.0",
+  "status": "PENDING_EXECUTION",
+  "total_scenarios": 100,
+  "categories": {
+    "capture_accuracy": {
+      "planned": 25,
+      "passed": null
+    },
+    "duplicate_prevention": {
+      "planned": 15,
+      "passed": null
+    },
+    "password_field_exclusion": {
+      "planned": 15,
+      "passed": null
+    },
+    "provenance_verification": {
+      "planned": 20,
+      "passed": null
+    },
+    "export_integrity": {
+      "planned": 15,
+      "passed": null
+    },
+    "tamper_detection": {
+      "planned": 10,
+      "passed": null
+    }
+  },
+  "overall_passed": null,
+  "overall_score_percent": null,
+  "commit_sha": null,
+  "environment": {
+    "os": null,
+    "python_version": null
+  },
+  "notes": "Scores remain null until the full benchmark is executed."
+}
