@@ -268,6 +268,10 @@ GitHub Actions runs tests, validates the manifest, and checks extension JavaScri
 - `graphics` — v3 logo and wizard screenshots.
 - `tests` — identity, uniqueness, redaction, signature, and enrollment tests.
 
+## Product Audit Proof of Global Logging
+
+<img width="846" height="242" alt="PromptTraceProof" src="https://github.com/user-attachments/assets/cd8c3588-7bbb-4f33-8ba3-58b781db8096" />
+
 ## Contributing
 
 Help is welcome. The leading community project is an accessible native GUI setup wizard that replaces terminal setup while preserving explicit consent and local-first security. Read [CONTRIBUTING.md](CONTRIBUTING.md) and find issues labeled [`help wanted`](https://github.com/healthearthack/prompt-trace/labels/help%20wanted).
